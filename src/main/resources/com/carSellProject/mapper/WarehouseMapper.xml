@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    namespace: 名称空间
+-->
+<mapper namespace="com.carSellProject.mapper.WarehouseMapper">
+    <resultMap id="WarehouseResultMap" type="com.carSellProject.pojo.Warehouse">
+        <result property="id" column="id"/>
+        <result property="brand" column="brand"/>
+        <result property="model" column="model"/>
+        <result property="color" column="color"/>
+        <result property="num" column="num"/>
+        <result property="money" column="money"/>
+    </resultMap>
+
+    <resultMap id="WarehouseResultList" type="java.util.List">
+        <result property="id" column="id"/>
+        <result property="brand" column="brand"/>
+        <result property="model" column="model"/>
+        <result property="color" column="color"/>
+        <result property="num" column="num"/>
+        <result property="money" column="money"/>
+    </resultMap>
+    <insert id="addCars">
+        {insert into warehouse (brand, model, color, num, money) value (#{w.getBrand()}, #{w.getModel()}, #{w.getColor()}, #{w.getNum()}, #{w.getMoney()})
+    </insert>
+
+    <select id="selectAll" resultMap="WarehouseResultMap">
+        select * from warehouse;
+    </select>
+</mapper>

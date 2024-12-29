@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    namespace: 名称空间
+-->
+<mapper namespace="com.carSellProject.mapper.PeopleMapper">
+    <resultMap id="PeopleResultMap" type="com.carSellProject.pojo.People">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="gender" column="gender"/>
+        <result property="telNum" column="tel_num"/>
+        <result property="position" column="position"/>
+        <result property="upperId" column="upper_id"/>
+        <result property="upperName" column="upper_name"/>
+        <result property="sum" column="sum"/>
+    </resultMap>
+
+    <update id="updatePwdById">
+        update people set password=n_pwd where id=pId;
+    </update>
+
+    <update id="updatePNameById">
+        update people set name=p_name where id=pId and not EXISTS(select * from people where name=p_name);
+    </update>
+
+    <select id="selectByName" resultMap="PeopleResultMap">
+        select * from employee_view where name=#{name};
+    </select>
+
+    <select id="selectAll" resultMap="PeopleResultMap">
+        select * from employee_view;
+    </select>
+
+    <select id="getPeopleByMId" resultMap="PeopleResultMap">
+        select * from employee_view where upper_id=#{mId};
+    </select>
+
+</mapper>

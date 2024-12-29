@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    namespace: 名称空间
+-->
+<mapper namespace="com.carSellProject.mapper.Sell_logMapper">
+    <resultMap id="Sell_logResultMap" type="com.carSellProject.pojo.Sell_log">
+        <result property="id" column="id"/>
+        <result property="client_id" column="client_id"/>
+        <result property="c_name" column="client_name"/>
+        <result property="p_name" column="name"/>
+        <result property="employee_id" column="employee_id"/>
+        <result property="brand" column="brand"/>
+        <result property="model" column="model"/>
+        <result property="num" column="num"/>
+        <result property="color" column="color"/>
+        <result property="sell_date" column="sell_date"/>
+        <result property="money" column="money"/>
+        <result property="state" column="state"/>
+    </resultMap>
+
+    <resultMap id="Sell_logResultList" type="java.util.List">
+        <result property="id" column="id"/>
+        <result property="c_name" column="c_name"/>
+        <result property="p_name" column="p_name"/>
+        <result property="brand" column="brand"/>
+        <result property="model" column="model"/>
+        <result property="color" column="color"/>
+        <result property="num" column="num"/>
+        <result property="sell_date" column="sell_date"/>
+        <result property="money" column="money"/>
+        <result property="color" column="color"/>
+    </resultMap>
+
+    <select id="selectByCName" resultMap="Sell_logResultList" resultType="java.util.List">
+        {call get_sell_log_c_name(#{name)}
+    </select>
+
+    <select id="selectLogByPId" resultMap="Sell_logResultMap">
+        select * from order_view o, sell_log s where s.employee_id=#{pId} and o.name=(select p.name from people p where p.id=#{pId});
+    </select>
+
+    <insert id="addSell_log">
+        insert into sell_log (client_id, employee_id, brand, model, color, num, sell_date, money, state) value (#{client_id}, #{employee_id}, #{brand}, #{model}, #{color}, #{num}, #{sell_date}, #{money}, '0');
+    </insert>
+
+    <select id="selectAll" resultMap="Sell_logResultMap">
+        select * from order_view;
+    </select>
+
+    <select id="selectBySId" resultMap="Sell_logResultMap" resultType="com.carSellProject.pojo.Sell_log">
+        select * from order_view where id=#{sId};
+    </select>
+
+    <update id="updateStateById">
+        update sell_log set state=#{sState} where id=#{sId};
+    </update>
+</mapper>

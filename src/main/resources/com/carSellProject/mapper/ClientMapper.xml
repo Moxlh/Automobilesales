@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    namespace: 名称空间
+-->
+<mapper namespace="com.carSellProject.mapper.ClientMapper">
+    <resultMap id="ClientResultMap" type="com.carSellProject.pojo.Client">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="telNum" column="tel_num"/>
+    </resultMap>
+
+    <resultMap id="ClientResultList" type="java.util.List">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="telNum" column="tel_num"/>
+    </resultMap>
+
+    <update id="updatePwdById">
+        {update client set password=n_cwd where id=cId;}
+    </update>
+
+    <update id="updateCNameById">
+        {update people set name=p_name where id=pId and not EXISTS(select * from people where name=p_name);}
+    </update>
+
+    <select id="selectByName" resultMap="ClientResultMap" resultType="com.carSellProject.pojo.Client">
+        {call get_c_by_name(#{name})}
+    </select>
+
+    <select id="getClientsByPId" resultMap="ClientResultMap">
+        select distinct c.id, c.name, c.gender, c.tel_num from client c, c_e_relationship r where r.employee_id = #{pId} and r.client_id=c.id;
+    </select>
+
+    <select id="getCByName" resultMap="ClientResultMap">
+        select * from client where name=#{name};
+    </select>
+</mapper>
